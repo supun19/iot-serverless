@@ -1,0 +1,12 @@
+Resources:
+  IotServerlessBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: iot-serverless-bucket-${self:provider.stage}
+
+
+Outputs:
+  IotServerlessBucketName:
+    Value: !Ref IotServerlessBucket
+    Export:
+      Name: ${self:provider.stage}-iotServerlessBucketName

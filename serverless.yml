@@ -1,0 +1,22 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: telzee
+# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
+app: iot
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: iot
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  stage: ${opt:stage, "dev"}
+
+functions:
+  iothandler:
+    handler: iot.handler
+    events:
+      - s3:
+          bucket:
+             Fn::ImportValue: ${self:provider.stage}-iotServerlessBucketName
+          event: s3:ObjectCreated:*
+          existing: true  
+        
